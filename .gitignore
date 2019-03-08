@@ -1,0 +1,9 @@
+# phpstorm project files
+.idea
+
+# windows thumbnail cache
+Thumbs.db
+
+# Файл с конфигурацией базы данных
+#/src/config.php
+
