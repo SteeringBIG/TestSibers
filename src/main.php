@@ -58,10 +58,15 @@ class main
 
     public function showListUsers($allUsers)
     {
-        //echo var_dump($allUsers);
-
         $this->showHead();
         require 'views/list_users.php';
+        $this->showFooter();
+    }
+
+    public function showEditUser($userData)
+    {
+        $this->showHead();
+        require 'views/user_edit.php';
         $this->showFooter();
     }
 }

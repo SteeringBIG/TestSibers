@@ -30,7 +30,9 @@ if ('/' === $uri) {
 	
 } elseif ('/panel' === $uri) {
 
-    //echo var_dump($_SESSION['login']) . PHP_EOL;
+
+    //echo var_dump($_POST) . PHP_EOL;
+
     $action = $_POST['action'];
     //echo 'action: ' . var_dump($_POST['action']) . " var: " . $action . PHP_EOL;
 
@@ -57,12 +59,49 @@ if ('/' === $uri) {
                 return;
             }
             //echo 'login: ' . $user->login . PHP_EOL;
-        } elseif ($action === "list") {
+        } elseif ($action === 'list') {
+            //echo '$action === \'list\'';
+
             if ($_SESSION['access'] === 1){
                 $main->showListUsers($db->getAllUsers());
             } else {
                 $main->showUserData();
             }
+
+        } elseif ($action === 'userInfo') {
+            //echo '$action === \'userInfo\'';
+            $db->user_login = $db->cleanSQL($_POST['login']);
+            $userData = $db->getUserInfo('auth');
+            if (isset($userData) === true) {
+                $main->showUserData($userData);
+            } elseif ($_SESSION['access'] === 1) {
+                $main->showListUsers($db->getAllUsers());
+            } else {
+                $main->showUserData();
+            }
+
+        } elseif ($action === 'userListBtn') {
+            //echo '$action = \'userListBtn\'';
+
+            $db->user_login = $db->cleanSQL($_POST['login']);
+            $userData = $db->getUserInfo('infoUser');
+
+            //echo var_dump($userData);
+
+            if (isset($userData) === true) {
+                if ($_POST['submit'] === 'edit') {
+                    $main->showEditUser($userData);
+                }
+                elseif ($_POST['submit'] === 'info') {
+                    $main->showUserData($userData);
+                }
+
+            } elseif ($_SESSION['access'] === 1) {
+                $main->showListUsers($db->getAllUsers());
+            } else {
+                $main->showUserData();
+            }
+        } elseif ($action === 'setUserInfo') {
 
         }
 
@@ -77,4 +116,4 @@ if ('/' === $uri) {
 }
 
 //// Серверная информация по рабоботе страницы
-$main->show_server_info($_POST['showServerInfo']);
+//$main->show_server_info($_POST['showServerInfo']);

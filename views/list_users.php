@@ -12,7 +12,7 @@
                 <th scope="col">Gender</th>
                 <th scope="col">Birthday</th>
                 <th scope="col">Access group</th>
-                <th scope="col">Access</th>
+
             </tr>
             </thead>
 
@@ -26,8 +26,16 @@
                         <th scope="col"><?= $user['last_name'] ?></th>
                         <th scope="col"><?= $user['gender'] ?></th>
                         <th scope="col"><?= $user['birth'] ?></th>
-                        <th scope="col"><?= $user['access'] ?></th>
                         <th scope="col"><?php echo ($user['access'] === 1) ? "Admin" : "User" ?></th>
+                        <th scope="col">
+                            <form action="/panel" method="post">
+                                <input type="hidden" name="action" value="userListBtn">
+                                <input type="hidden" name="login" value="<?= $user['user_login'] ?>">
+                                <button name="submit" value="info" type="submit" class="btn btn-info">Info</button>
+                                <button name="submit" value="edit" type="submit" class="btn btn-success">Edit</button>
+                            </form>
+                        </th>
+
                     </tr>
                 <?php endforeach; ?>
 
