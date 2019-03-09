@@ -4,6 +4,7 @@ require 'vendor/autoload.php';
 
 use Sibers\main;
 use Sibers\dataBase;
+use Sibers\user;
 
 $main = new main();
 
@@ -30,20 +31,41 @@ if ('/' === $uri) {
 	$main->showHome();
 	
 } elseif ('/panel' === $uri) {
-    //echo var_dump(file_get_contents("php://input"));
-    $inputText =  file_get_contents("php://input");
-    //echo $inputText;
 
-    if(empty($inputText)){
+    //echo var_dump($_POST['action']) . PHP_EOL;
+    $action = $_POST['action'];
+    //echo 'action: ' . var_dump($_POST['action']) . " var: " . $action . PHP_EOL;
+
+    if (empty($action)){
         $main->showLoginForm();
         return;
     } else {
         $db = new dataBase();
+
+        if ($action === "auth"){
+
+            $db->user_login = $db->cleanSQL($_POST['login']);
+            $db->user_pass = hash('ripemd160', 'prefix_' . $_POST['pass'] . '_suffix');
+
+            //echo $db->user_pass;
+
+            $userData = $db->authUser();
+            if (isset($userData) === true){
+                $_SESSION['login'] = $db->user_login;
+                $_SESSION['access'] = $userData['access'];
+
+                $main->showUserData($userData);
+            } else {
+                $main->showLoginForm();
+                return;
+            }
+            //echo 'login: ' . $user->login . PHP_EOL;
+        }
+
     }
 
-    $main->inputText = $inputText;
+    //$main->inputText = $inputText;
     //$main->inputMessage();
-
 
 } else {
 	header('HTTP/1.1 404 Not Found');
@@ -51,4 +73,4 @@ if ('/' === $uri) {
 }
 
 //// Серверная информация по рабоботе страницы
-//$main->show_info($_POST['showServerInfo']);
+$main->show_server_info($_POST['showServerInfo']);

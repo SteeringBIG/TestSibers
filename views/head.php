@@ -16,8 +16,8 @@
 <body>
 <div class="container-fluid">
     <div class="col-">
-        <div class="alert alert-success btn-block text-center">
-            <h6>Admin panel</h6>
+        <div class="alert alert-success text-center">
+            <h3>Admin panel</h3>
         </div>
     </div>
 

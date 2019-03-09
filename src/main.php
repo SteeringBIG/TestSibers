@@ -3,7 +3,6 @@ namespace Sibers;
 
 class main
 {
-    public $inputText;
 
 	private function showHead()
 	{
@@ -21,7 +20,12 @@ class main
 	{
 		require 'views/footer.php';
 	}
-	
+
+	public function show_server_info()
+    {
+        require 'views/server_info.php';
+    }
+
 	public function showHome()
 	{
 		$this->showHead();
@@ -33,6 +37,13 @@ class main
     {
         $this->showHead();
         require 'views/login_form.php';
+        $this->showFooter();
+    }
+
+    public function showUserData($userData)
+    {
+        $this->showHead();
+        require 'views/user_data.php';
         $this->showFooter();
     }
 }

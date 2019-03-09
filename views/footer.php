@@ -1,7 +1,7 @@
 
 
     <div class="col-">
-        <div class="alert alert-success btn-block text-center">
+        <div class="alert alert-success text-center">
             <h6>Тестовая консоль</h6>
         </div>
     </div>
