@@ -2,7 +2,12 @@
 
     <div class="col-">
         <div class="alert alert-success text-center">
-            <h6>Тестовая консоль</h6>
+            <?php if($_SESSION['access'] === 1) : ?>
+                <form action="/panel" method="post">
+                    <input type="hidden" name="action" value="list">
+                    <button type="submit" class="btn btn-primary">List all users</button>
+                </form>
+            <?php endif; ?>
         </div>
     </div>
 

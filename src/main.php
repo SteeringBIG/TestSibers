@@ -3,6 +3,12 @@ namespace Sibers;
 
 class main
 {
+    public $user_check;
+
+    public function __construct()
+    {
+        $this->user_check = md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']);
+    }
 
 	private function showHead()
 	{
@@ -35,6 +41,9 @@ class main
 
     public function showLoginForm()
     {
+        $_SESSION = array();
+        $_SESSION['user_data'] = $this->user_check;
+
         $this->showHead();
         require 'views/login_form.php';
         $this->showFooter();
@@ -44,6 +53,15 @@ class main
     {
         $this->showHead();
         require 'views/user_data.php';
+        $this->showFooter();
+    }
+
+    public function showListUsers($allUsers)
+    {
+        //echo var_dump($allUsers);
+
+        $this->showHead();
+        require 'views/list_users.php';
         $this->showFooter();
     }
 }

@@ -53,25 +53,32 @@ class dataBase
 		if ($result === false){
 			return[];
 		}
-		return $result[0];
+		return $result;
 	}
 
-    public function getUser()
+    public function getAllUsers()
     {
-
+        $stmt = $this->query('SELECT * FROM user');
+        //echo $stmt;
+        return $stmt;
     }
 
-    public function authUser()
+    public function getUserInfo($action)
     {
-        $stmt = $this->query('SELECT * FROM user WHERE user_login=\'' . $this->user_login . '\' AND user_pass=\'' . $this->user_pass . '\'');
-        return $stmt;
+        if ($action = 'infoUser') {
+            $stmt = $this->query('SELECT * FROM user WHERE user_login=\'' . $this->user_login . '\'');
+        } elseif ($action = 'auth') {
+            $stmt = $this->query('SELECT * FROM user WHERE user_login=\'' . $this->user_login . '\' AND user_pass=\'' . $this->user_pass . '\'');
+        }
+
+        return $stmt[0];
     }
 
     public function checkUser()
     {
 
         $stmt = $this->query('SELECT user_login FROM user WHERE user_login=\'' . $this->user_login . '\'');
-        return isset($stmt);
+        return isset($stmt[0]);
 
     }
 
