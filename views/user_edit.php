@@ -3,6 +3,7 @@
         <h3 class="text-center">Edit user data</h3>
             <form method="POST" action="/panel">
                 <input type="hidden" name="action" value="setUserInfo">
+                <input type="hidden" name="login" value="<?= $userData['user_login'] ?>">
 
                 <div class="form-group">
                     <label for="id"><b>User ID: </b><?= $userData['id'] ?></label>
@@ -60,7 +61,8 @@
 
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button name="submit" value="save" type="submit" class="btn btn-primary">Save</button>
+                <button name="submit" value="cancel" type="submit" class="btn btn-primary">Cancel</button>
             </form>
     </div>
 </div>

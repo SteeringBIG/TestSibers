@@ -69,4 +69,11 @@ class main
         require 'views/user_edit.php';
         $this->showFooter();
     }
+
+    public function showDeleteUser($userData)
+    {
+        $this->showHead();
+        require 'views/user_delete.php';
+        $this->showFooter();
+    }
 }

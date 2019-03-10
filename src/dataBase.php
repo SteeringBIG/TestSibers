@@ -70,16 +70,17 @@ class dataBase
         } elseif ($action = 'auth') {
             $stmt = $this->query('SELECT * FROM user WHERE user_login=\'' . $this->user_login . '\' AND user_pass=\'' . $this->user_pass . '\'');
         }
-
         return $stmt[0];
     }
 
     public function checkUser()
     {
-
         $stmt = $this->query('SELECT user_login FROM user WHERE user_login=\'' . $this->user_login . '\'');
         return isset($stmt[0]);
-
     }
 
+    public function deleteUser()
+    {
+        $this->query('DELETE FROM user WHERE user_login=\'' . $this->user_login . '\'');
+    }
 }

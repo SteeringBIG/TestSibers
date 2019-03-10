@@ -1,6 +1,5 @@
 <div class="col-">
     <div class="alert alert-info text-center">
-
         <h3>List all users</h3>
         <table class="table table-striped">
             <thead>
@@ -12,12 +11,10 @@
                 <th scope="col">Gender</th>
                 <th scope="col">Birthday</th>
                 <th scope="col">Access group</th>
-
+                <th scope="col">Action</th>
             </tr>
             </thead>
-
             <tbody>
-
                 <?php foreach($allUsers as $user) : ?>
                     <tr>
                         <th scope="col"><?= $user['id'] ?></th>
@@ -33,16 +30,12 @@
                                 <input type="hidden" name="login" value="<?= $user['user_login'] ?>">
                                 <button name="submit" value="info" type="submit" class="btn btn-info">Info</button>
                                 <button name="submit" value="edit" type="submit" class="btn btn-success">Edit</button>
+                                <button name="submit" value="delete" type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </th>
-
                     </tr>
                 <?php endforeach; ?>
-
             </tbody>
-
         </table>
-
-
     </div>
 </div>

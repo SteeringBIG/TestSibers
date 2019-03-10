@@ -31,7 +31,7 @@ if ('/' === $uri) {
 } elseif ('/panel' === $uri) {
 
 
-    //echo var_dump($_POST) . PHP_EOL;
+    echo var_dump($_POST) . PHP_EOL;
 
     $action = $_POST['action'];
     //echo 'action: ' . var_dump($_POST['action']) . " var: " . $action . PHP_EOL;
@@ -42,8 +42,8 @@ if ('/' === $uri) {
     } else {
         $db = new dataBase();
 
-        if ($action === "auth"){
 
+        if ($action === "auth"){
             $db->user_login = $db->cleanSQL($_POST['login']);
             $db->user_pass = hash('ripemd160', 'prefix_' . $_POST['pass'] . '_suffix');
 
@@ -69,7 +69,6 @@ if ('/' === $uri) {
             }
 
         } elseif ($action === 'userInfo') {
-            //echo '$action === \'userInfo\'';
             $db->user_login = $db->cleanSQL($_POST['login']);
             $userData = $db->getUserInfo('auth');
             if (isset($userData) === true) {
@@ -81,34 +80,51 @@ if ('/' === $uri) {
             }
 
         } elseif ($action === 'userListBtn') {
-            //echo '$action = \'userListBtn\'';
-
             $db->user_login = $db->cleanSQL($_POST['login']);
             $userData = $db->getUserInfo('infoUser');
 
-            //echo var_dump($userData);
+            echo var_dump($userData);
 
             if (isset($userData) === true) {
                 if ($_POST['submit'] === 'edit') {
                     $main->showEditUser($userData);
-                }
-                elseif ($_POST['submit'] === 'info') {
+                } elseif ($_POST['submit'] === 'info') {
                     $main->showUserData($userData);
+                } elseif ($_POST['submit'] === 'delete') {
+                    $main->showDeleteUser($userData);
                 }
-
             } elseif ($_SESSION['access'] === 1) {
                 $main->showListUsers($db->getAllUsers());
             } else {
                 $main->showUserData();
             }
-        } elseif ($action === 'setUserInfo') {
+        } elseif ($action === 'userDelete') {
+            $db->user_login = $db->cleanSQL($_POST['login']);
 
+            if ($_POST['submit'] === 'delete') {
+                $db->deleteUser();
+                $main->showListUsers($db->getAllUsers());
+            } elseif ($_POST['submit'] === 'cancel') {
+                if ($_SESSION['access'] === 1) {
+                    $main->showListUsers($db->getAllUsers());
+                }
+            }
+
+        } elseif ($action === 'setUserInfo') {
+            $db->user_login = $db->cleanSQL($_POST['login']);
+
+            if ($_POST['submit'] === 'save') {
+
+                $main->showListUsers($db->getAllUsers());
+            } elseif ($_POST['submit'] === 'cancel') {
+                if ($_SESSION['access'] === 1) {
+                    $main->showListUsers($db->getAllUsers());
+                }
+            }
         }
 
     }
 
-    //$main->inputText = $inputText;
-    //$main->inputMessage();
 
 } else {
 	header('HTTP/1.1 404 Not Found');
