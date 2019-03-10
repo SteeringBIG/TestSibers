@@ -29,6 +29,25 @@ class dataBase
 		return $this;
 	}
 
+    /**
+     * @param $allowed - массив с именами переменных для запроса
+     * @param $values - значения переменных
+     * @param array $source - массив с данными для запроса
+     * @return bool|string - готовая строка с частью запроса с переменными
+     */
+    function pdoSet($allowed, &$values, $source = array()) {
+        $set = '';
+        $values = array();
+        if (!$source) $source = &$_POST;
+        foreach ($allowed as $field) {
+            if (isset($source[$field])) {
+                $set.="`".str_replace("`","``",$field)."`". "=:$field, ";
+                $values[$field] = $source[$field];
+            }
+        }
+        return substr($set, 0, -2);
+    }
+
     public function cleanSQL($var)
     {
         if (isset($var)){
@@ -82,5 +101,21 @@ class dataBase
     public function deleteUser()
     {
         $this->query('DELETE FROM user WHERE user_login=\'' . $this->user_login . '\'');
+    }
+
+    public function editUserInfo($userData)
+    {
+
+        $allowed = array("first_name", "last_name", "gender", "birth", "access"); // allowed fields
+
+        //echo var_dump($this->pdoSet($allowed, $values)) . PHP_EOL;
+
+        $sql = 'UPDATE user SET ' . $this->pdoSet($allowed, $values, $userData) . ' WHERE id=\'' . $userData['id'] . '\'';
+
+        //echo $sql . PHP_EOL;
+
+        $stm = $this->link->prepare($sql);
+        //$values["id"] = $userData['id'];
+        $stm->execute($values);
     }
 }

@@ -3,7 +3,6 @@
         <h3 class="text-center">Edit user data</h3>
             <form method="POST" action="/panel">
                 <input type="hidden" name="action" value="setUserInfo">
-                <input type="hidden" name="login" value="<?= $userData['user_login'] ?>">
 
                 <div class="form-group">
                     <label for="id"><b>User ID: </b><?= $userData['id'] ?></label>
@@ -27,19 +26,19 @@
                     <div >
                         <div class="form-check form-check-inline">
                             <label class="btn btn-secondary active">
-                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="1" <?php echo $userData['gender'] == "male" ? 'checked' : ''; ?> > Male
+                                <input class="form-check-input" type="radio" name="gender" id="gender1" value="male" <?php echo $userData['gender'] == "male" ? 'checked' : ''; ?> > Male
                             </label>
                             <div class="form-check form-check-inline">
                             </div>
                             <label class="btn btn-secondary">
-                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="0" <?php echo $userData['gender'] == "female" ? 'checked' : ''; ?> > Female
+                                <input class="form-check-input" type="radio" name="gender" id="gender2" value="female" <?php echo $userData['gender'] == "female" ? 'checked' : ''; ?> > Female
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="birth"><b>Birthday:</b></label>
-                    <input type="date" class="form-control" name="gender" value="<?= $userData['birth'] ?>">
+                    <input type="date" class="form-control" name="birth" value="<?= $userData['birth'] ?>">
                 </div>
                 <div class="form-group">
                     <label for="access"><b>Access:</b></label>
@@ -56,8 +55,6 @@
                             </label>
                         </div>
                     </div>
-
-
 
                 </div>
 

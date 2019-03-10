@@ -31,7 +31,7 @@ if ('/' === $uri) {
 } elseif ('/panel' === $uri) {
 
 
-    echo var_dump($_POST) . PHP_EOL;
+    //echo var_dump($_POST) . PHP_EOL;
 
     $action = $_POST['action'];
     //echo 'action: ' . var_dump($_POST['action']) . " var: " . $action . PHP_EOL;
@@ -111,10 +111,9 @@ if ('/' === $uri) {
             }
 
         } elseif ($action === 'setUserInfo') {
-            $db->user_login = $db->cleanSQL($_POST['login']);
 
             if ($_POST['submit'] === 'save') {
-
+                $db->editUserInfo($_POST);
                 $main->showListUsers($db->getAllUsers());
             } elseif ($_POST['submit'] === 'cancel') {
                 if ($_SESSION['access'] === 1) {

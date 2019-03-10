@@ -4,7 +4,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th scope="col">#</th>
+                <th scope="col">ID</th>
                 <th scope="col">Login</th>
                 <th scope="col">First</th>
                 <th scope="col">Last</th>
