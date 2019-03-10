@@ -1,7 +1,7 @@
 <div class="col-">
     <div class="alert alert-info text-center">
         <h3>List all users</h3>
-        <table class="table table-striped">
+        <table class="table table-striped" style="background-color: white">
             <thead>
             <tr>
                 <th scope="col">ID</th>

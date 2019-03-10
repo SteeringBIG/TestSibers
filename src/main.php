@@ -76,4 +76,11 @@ class main
         require 'views/user_delete.php';
         $this->showFooter();
     }
+
+    public function showInsertUser()
+    {
+        $this->showHead();
+        require 'views/user_insert.php';
+        $this->showFooter();
+    }
 }

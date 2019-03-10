@@ -105,17 +105,20 @@ class dataBase
 
     public function editUserInfo($userData)
     {
-
         $allowed = array("first_name", "last_name", "gender", "birth", "access"); // allowed fields
 
-        //echo var_dump($this->pdoSet($allowed, $values)) . PHP_EOL;
-
         $sql = 'UPDATE user SET ' . $this->pdoSet($allowed, $values, $userData) . ' WHERE id=\'' . $userData['id'] . '\'';
-
-        //echo $sql . PHP_EOL;
-
         $stm = $this->link->prepare($sql);
-        //$values["id"] = $userData['id'];
         $stm->execute($values);
     }
+
+    public function addNewUser($userData)
+    {
+        $allowed = array("user_login", "user_pass", "first_name", "last_name", "gender", "birth", "access"); // allowed fields
+
+        $sql = "INSERT INTO user SET " . $this->pdoSet($allowed, $values, $userData);
+        $stm = $this->link->prepare($sql);
+        $stm->execute($values);
+    }
+
 }

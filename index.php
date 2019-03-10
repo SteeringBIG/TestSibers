@@ -4,7 +4,6 @@ require 'vendor/autoload.php';
 
 use Sibers\main;
 use Sibers\dataBase;
-use Sibers\user;
 
 $main = new main();
 
@@ -58,15 +57,19 @@ if ('/' === $uri) {
                 $main->showLoginForm();
                 return;
             }
-            //echo 'login: ' . $user->login . PHP_EOL;
-        } elseif ($action === 'list') {
-            //echo '$action === \'list\'';
+        } elseif ($action === 'footerBtn') {
 
-            if ($_SESSION['access'] === 1){
-                $main->showListUsers($db->getAllUsers());
-            } else {
-                $main->showUserData();
-            }
+                if ($_POST['submit'] === 'list') {
+                    $main->showListUsers($db->getAllUsers());
+
+                } elseif ($_POST['submit'] === 'add') {
+                    $main->showInsertUser();
+
+                } elseif ($_POST['submit'] === 'login') {
+                    $_SESSION['login'] = $db->user_login;
+                    $_SESSION['access'] = $userData['access'];
+                    $main->showLoginForm();
+                }
 
         } elseif ($action === 'userInfo') {
             $db->user_login = $db->cleanSQL($_POST['login']);
@@ -83,7 +86,7 @@ if ('/' === $uri) {
             $db->user_login = $db->cleanSQL($_POST['login']);
             $userData = $db->getUserInfo('infoUser');
 
-            echo var_dump($userData);
+            //echo var_dump($userData);
 
             if (isset($userData) === true) {
                 if ($_POST['submit'] === 'edit') {
@@ -98,6 +101,7 @@ if ('/' === $uri) {
             } else {
                 $main->showUserData();
             }
+
         } elseif ($action === 'userDelete') {
             $db->user_login = $db->cleanSQL($_POST['login']);
 
@@ -120,7 +124,17 @@ if ('/' === $uri) {
                     $main->showListUsers($db->getAllUsers());
                 }
             }
-        }
+        } elseif ($action === 'addNewUser') {
+
+                if ($_POST['submit'] === 'save') {
+                    $db->addNewUser($_POST);
+                    $main->showUserData($_POST);
+                } elseif ($_POST['submit'] === 'cancel') {
+                    if ($_SESSION['access'] === 1) {
+                        $main->showListUsers($db->getAllUsers());
+                    }
+                }
+            }
 
     }
 
