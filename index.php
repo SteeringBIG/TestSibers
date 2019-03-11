@@ -84,7 +84,7 @@ if ('/' === $uri) {
             if (isset($userData) === true) {
                 $main->showUserData($userData);
             } elseif ($_SESSION['access'] === 1) {
-                $main->showListUsers($db->getAllUsers());
+                $main->showListUsers($db->getAllUsers('id'));
             } else {
                 $main->showUserData();
             }
@@ -104,7 +104,7 @@ if ('/' === $uri) {
                     $main->showDeleteUser($userData);
                 }
             } elseif ($_SESSION['access'] === 1) {
-                $main->showListUsers($db->getAllUsers());
+                $main->showListUsers($db->getAllUsers('id'));
             } else {
                 $main->showUserData();
             }
@@ -114,10 +114,10 @@ if ('/' === $uri) {
 
             if ($_POST['submit'] === 'delete') {
                 $db->deleteUser();
-                $main->showListUsers($db->getAllUsers());
+                $main->showListUsers($db->getAllUsers('id'));
             } elseif ($_POST['submit'] === 'cancel') {
                 if ($_SESSION['access'] === 1) {
-                    $main->showListUsers($db->getAllUsers());
+                    $main->showListUsers($db->getAllUsers('id'));
                 }
             }
 
@@ -125,10 +125,10 @@ if ('/' === $uri) {
 
             if ($_POST['submit'] === 'save') {
                 $db->editUserInfo($_POST);
-                $main->showListUsers($db->getAllUsers());
+                $main->showListUsers($db->getAllUsers('id'));
             } elseif ($_POST['submit'] === 'cancel') {
                 if ($_SESSION['access'] === 1) {
-                    $main->showListUsers($db->getAllUsers());
+                    $main->showListUsers($db->getAllUsers('id'));
                 }
             }
         } elseif ($action === 'addNewUser') {
@@ -138,7 +138,7 @@ if ('/' === $uri) {
                     $main->showUserData($_POST);
                 } elseif ($_POST['submit'] === 'cancel') {
                     if ($_SESSION['access'] === 1) {
-                        $main->showListUsers($db->getAllUsers());
+                        $main->showListUsers($db->getAllUsers('id'));
                     }
                 }
             }
