@@ -41,35 +41,42 @@ if ('/' === $uri) {
     } else {
         $db = new dataBase();
 
-
         if ($action === "auth"){
             $db->user_login = $db->cleanSQL($_POST['login']);
             $db->user_pass = hash('ripemd160', 'prefix_' . $_POST['pass'] . '_suffix');
 
             $userData = $db->getUserInfo('auth');
+
             if (isset($userData) === true){
                 $_SESSION['login'] = $db->user_login;
                 $_SESSION['access'] = $userData['access'];
 
                 $main->showUserData($userData);
+                return;
             } else {
 
                 $main->showLoginForm();
                 return;
             }
+        } elseif ($action === 'userListSort') {
+            if (isset($_POST['sortColumn'])) {
+                $main->showListUsers($db->getAllUsers($_POST['sortColumn']));
+            } else {
+                $main->showListUsers($db->getAllUsers('id'));
+            }
         } elseif ($action === 'footerBtn') {
 
-                if ($_POST['submit'] === 'list') {
-                    $main->showListUsers($db->getAllUsers());
+            if ($_POST['submit'] === 'list') {
+                $main->showListUsers($db->getAllUsers('id'));
 
-                } elseif ($_POST['submit'] === 'add') {
-                    $main->showInsertUser();
+            } elseif ($_POST['submit'] === 'add') {
+                $main->showInsertUser();
 
-                } elseif ($_POST['submit'] === 'login') {
-                    $_SESSION['login'] = $db->user_login;
-                    $_SESSION['access'] = $userData['access'];
-                    $main->showLoginForm();
-                }
+            } elseif ($_POST['submit'] === 'login') {
+                $_SESSION['login'] = $db->user_login;
+                $_SESSION['access'] = $userData['access'];
+                $main->showLoginForm();
+            }
 
         } elseif ($action === 'userInfo') {
             $db->user_login = $db->cleanSQL($_POST['login']);

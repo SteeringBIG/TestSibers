@@ -68,26 +68,24 @@ class dataBase
 		$sth->execute();
 		
 		$result = $sth->fetchAll(\PDO::FETCH_ASSOC);
-		
 		if ($result === false){
 			return[];
 		}
 		return $result;
 	}
 
-    public function getAllUsers()
+    public function getAllUsers($columnSort)
     {
-        $stmt = $this->query('SELECT * FROM user');
-        //echo $stmt;
+        $stmt = $this->query('SELECT * FROM user ORDER BY ' . $columnSort . ' ASC'); //DESC
         return $stmt;
     }
 
     public function getUserInfo($action)
     {
-        if ($action = 'infoUser') {
-            $stmt = $this->query('SELECT * FROM user WHERE user_login=\'' . $this->user_login . '\'');
-        } elseif ($action = 'auth') {
-            $stmt = $this->query('SELECT * FROM user WHERE user_login=\'' . $this->user_login . '\' AND user_pass=\'' . $this->user_pass . '\'');
+        if ($action === 'infoUser') {
+            $stmt = $this->query('SELECT * FROM user WHERE user_login LIKE \'' . $this->user_login . '\'');
+        } elseif ($action === 'auth') {
+            $stmt = $this->query('SELECT * FROM user WHERE user_login = \'' . $this->user_login . '\' AND user_pass = \'' . $this->user_pass . '\'');
         }
         return $stmt[0];
     }

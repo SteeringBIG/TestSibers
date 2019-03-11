@@ -4,13 +4,55 @@
         <table class="table table-striped" style="background-color: white">
             <thead>
             <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Login</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Gender</th>
-                <th scope="col">Birthday</th>
-                <th scope="col">Access group</th>
+                <th scope="col">
+                    <form name="id" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="id">
+                        <a href="#" onclick="document.id.submit()">ID</a>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form name="user_login" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="user_login">
+                        <a href="#" onclick="document.user_login.submit()">Login</a>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form name="first_name" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="first_name">
+                        <a href="#" onclick="document.first_name.submit()">First</a>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form name="last_name" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="last_name">
+                        <a href="#" onclick="document.last_name.submit()">Last</a>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form name="gender" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="gender">
+                        <a href="#" onclick="document.gender.submit()">Gender</a>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form name="birth" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="birth">
+                        <a href="#" onclick="document.birth.submit()">Birthday</a>
+                    </form>
+                </th>
+                <th scope="col">
+                    <form name="access" method="POST" action="/panel">
+                        <input type="hidden" name="action" value="userListSort">
+                        <input type="hidden" name="sortColumn" value="access">
+                        <a href="#" onclick="document.access.submit()">Access group</a>
+                    </form>
+                </th>
                 <th scope="col">Action</th>
             </tr>
             </thead>
