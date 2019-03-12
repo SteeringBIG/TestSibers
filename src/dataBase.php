@@ -6,7 +6,7 @@ class dataBase
     public $user_login;
     public $user_pass;
 
-	private $link;
+    private $link;
 	
 	public function __construct()
 	{
@@ -74,10 +74,19 @@ class dataBase
 		return $result;
 	}
 
-    public function getAllUsers($columnSort)
+    public function getAllUsers($columnSort = 'id')
     {
-        $stmt = $this->query('SELECT * FROM user ORDER BY ' . $columnSort . ' ASC'); //DESC
+        $_SESSION['total_rows'] = $this->getTotalRows();
+        $start = ($_SESSION['n_page'] - 1) * $_SESSION['per_page'];
+
+        $stmt = $this->query('SELECT * FROM user ORDER BY ' . $columnSort . ' ' . $_SESSION['userListSortOrder'] . ' LIMIT ' . $start . ',' . $_SESSION['per_page']); //DESC
         return $stmt;
+    }
+
+    private function getTotalRows()
+    {
+        $stmt = $this->query('SELECT count(*) FROM user');
+        return $stmt[0]['count(*)'];
     }
 
     public function getUserInfo($action)

@@ -29,7 +29,8 @@ if ('/' === $uri) {
 	
 } elseif ('/panel' === $uri) {
 
-
+    $_SESSION['per_page'] = 5;
+    $_SESSION['n_page'] = 1;
     //echo var_dump($_POST) . PHP_EOL;
 
     $action = $_POST['action'];
@@ -58,16 +59,31 @@ if ('/' === $uri) {
                 $main->showLoginForm();
                 return;
             }
+        } elseif ($action === 'userListPagesBtn') {
+            $_SESSION['n_page'] = $_POST['n_page'];
+            //echo var_dump($_POST);
+            $main->showListUsers($db->getAllUsers());
+
         } elseif ($action === 'userListSort') {
             if (isset($_POST['sortColumn'])) {
+
+                $sort = $_SESSION['userListSortOrder'];
+                if ((isset($sort)) && ($_SESSION['userListSort'] === $_POST['sortColumn'])) {
+                    $_SESSION['userListSortOrder'] = ($sort  === 'ASC') ? 'DESC' : 'ASC';
+                } else {
+                    $_SESSION['userListSortOrder'] = 'ASC';
+                }
+                $_SESSION['userListSort'] = $_POST['sortColumn'];
+
                 $main->showListUsers($db->getAllUsers($_POST['sortColumn']));
+
             } else {
-                $main->showListUsers($db->getAllUsers('id'));
+                $main->showListUsers($db->getAllUsers());
             }
         } elseif ($action === 'footerBtn') {
 
             if ($_POST['submit'] === 'list') {
-                $main->showListUsers($db->getAllUsers('id'));
+                $main->showListUsers($db->getAllUsers());
 
             } elseif ($_POST['submit'] === 'add') {
                 $main->showInsertUser();
@@ -84,7 +100,7 @@ if ('/' === $uri) {
             if (isset($userData) === true) {
                 $main->showUserData($userData);
             } elseif ($_SESSION['access'] === 1) {
-                $main->showListUsers($db->getAllUsers('id'));
+                $main->showListUsers($db->getAllUsers());
             } else {
                 $main->showUserData();
             }
@@ -104,7 +120,7 @@ if ('/' === $uri) {
                     $main->showDeleteUser($userData);
                 }
             } elseif ($_SESSION['access'] === 1) {
-                $main->showListUsers($db->getAllUsers('id'));
+                $main->showListUsers($db->getAllUsers());
             } else {
                 $main->showUserData();
             }
@@ -114,10 +130,10 @@ if ('/' === $uri) {
 
             if ($_POST['submit'] === 'delete') {
                 $db->deleteUser();
-                $main->showListUsers($db->getAllUsers('id'));
+                $main->showListUsers($db->getAllUsers());
             } elseif ($_POST['submit'] === 'cancel') {
                 if ($_SESSION['access'] === 1) {
-                    $main->showListUsers($db->getAllUsers('id'));
+                    $main->showListUsers($db->getAllUsers());
                 }
             }
 
@@ -125,10 +141,10 @@ if ('/' === $uri) {
 
             if ($_POST['submit'] === 'save') {
                 $db->editUserInfo($_POST);
-                $main->showListUsers($db->getAllUsers('id'));
+                $main->showListUsers($db->getAllUsers());
             } elseif ($_POST['submit'] === 'cancel') {
                 if ($_SESSION['access'] === 1) {
-                    $main->showListUsers($db->getAllUsers('id'));
+                    $main->showListUsers($db->getAllUsers());
                 }
             }
         } elseif ($action === 'addNewUser') {
@@ -138,7 +154,7 @@ if ('/' === $uri) {
                     $main->showUserData($_POST);
                 } elseif ($_POST['submit'] === 'cancel') {
                     if ($_SESSION['access'] === 1) {
-                        $main->showListUsers($db->getAllUsers('id'));
+                        $main->showListUsers($db->getAllUsers());
                     }
                 }
             }
